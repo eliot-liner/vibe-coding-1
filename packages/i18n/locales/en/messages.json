@@ -1,27 +1,11 @@
 {
   "extensionDescription": {
     "description": "Extension description",
-    "message": "Chrome extension boilerplate developed with Vite, React and Typescript"
+    "message": "A simple and elegant memo extension for Chrome"
   },
   "extensionName": {
     "description": "Extension name",
-    "message": "Chrome extension boilerplate"
-  },
-  "toggleTheme": {
-    "message": "Toggle theme"
-  },
-  "injectButton": {
-    "message": "Click to inject Content Scripts"
-  },
-  "greeting": {
-    "description": "Greeting message",
-    "message": "Hello, My name is $NAME$",
-    "placeholders": {
-      "name": {
-        "content": "$1",
-        "example": "John Doe"
-      }
-    }
+    "message": "Quick Memo"
   },
   "hello": {
     "description": "Placeholder example",
@@ -41,5 +25,35 @@
   },
   "displayErrorReset": {
     "message": "Run Again"
+  },
+  "memo": {
+    "message": "Memo"
+  },
+  "memoPlaceholder": {
+    "message": "Write your memo here..."
+  },
+  "addMemo": {
+    "message": "Add Memo"
+  },
+  "addingMemo": {
+    "message": "Adding..."
+  },
+  "contentRequired": {
+    "message": "Content is required"
+  },
+  "failedToAddMemo": {
+    "message": "Failed to add memo"
+  },
+  "deleteMemo": {
+    "message": "Delete"
+  },
+  "noMemos": {
+    "message": "Write your first memo!"
+  },
+  "noMatchingMemos": {
+    "message": "No matching memos found."
+  },
+  "searchMemos": {
+    "message": "Search memos..."
   }
 }

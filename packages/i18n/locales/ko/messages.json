@@ -1,27 +1,11 @@
 {
   "extensionDescription": {
     "description": "Extension description",
-    "message": "React, Typescript, Vite를 사용한 크롬 익스텐션 보일러플레이트입니다."
+    "message": "심플하고 우아한 크롬 메모 확장 프로그램"
   },
   "extensionName": {
     "description": "Extension name",
-    "message": "크롬 익스텐션 보일러플레이트"
-  },
-  "toggleTheme": {
-    "message": "테마 변경"
-  },
-  "injectButton": {
-    "message": "콘텐츠 스크립트를 삽입하려면 클릭하세요."
-  },
-  "greeting": {
-    "description": "인사 메시지",
-    "message": "안녕하세요, 제 이름은 $NAME$입니다.",
-    "placeholders": {
-      "name": {
-        "content": "$1",
-        "example": "홍길동"
-      }
-    }
+    "message": "퀵 메모"
   },
   "hello": {
     "description": "Placeholder 예시",
@@ -41,5 +25,35 @@
   },
   "displayErrorReset": {
     "message": "다시 실행합니다."
+  },
+  "memo": {
+    "message": "메모"
+  },
+  "memoPlaceholder": {
+    "message": "메모를 작성해주세요..."
+  },
+  "addMemo": {
+    "message": "메모 추가"
+  },
+  "addingMemo": {
+    "message": "추가 중..."
+  },
+  "contentRequired": {
+    "message": "내용을 입력해주세요"
+  },
+  "failedToAddMemo": {
+    "message": "메모 추가에 실패했습니다"
+  },
+  "deleteMemo": {
+    "message": "삭제"
+  },
+  "noMemos": {
+    "message": "첫 번째 메모를 작성해보세요!"
+  },
+  "noMatchingMemos": {
+    "message": "검색 결과가 없습니다."
+  },
+  "searchMemos": {
+    "message": "메모 검색..."
   }
 }

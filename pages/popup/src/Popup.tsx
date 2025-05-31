@@ -1,61 +1,46 @@
 import '@src/Popup.css';
-import { t } from '@extension/i18n';
-import { PROJECT_URL_OBJECT, useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
-import { exampleThemeStorage } from '@extension/storage';
-import { cn, ErrorDisplay, LoadingSpinner, ToggleButton } from '@extension/ui';
+import { MemoForm } from './components/MemoForm';
+import { MemoList } from './components/MemoList';
+import { SearchBar } from './components/SearchBar';
+import { withErrorBoundary, withSuspense } from '@extension/shared';
+import { MemoStorage } from '@extension/storage';
+import { ErrorDisplay, LoadingSpinner } from '@extension/ui';
+import { useCallback, useEffect, useState } from 'react';
 
-const notificationOptions = {
-  type: 'basic',
-  iconUrl: chrome.runtime.getURL('icon-34.png'),
-  title: 'Injecting content script error',
-  message: 'You cannot inject script here!',
-} as const;
+const memoStorage = MemoStorage.getInstance();
 
-const Popup = () => {
-  const { isLight } = useStorage(exampleThemeStorage);
-  const logo = isLight ? 'popup/logo_vertical.svg' : 'popup/logo_vertical_dark.svg';
+export const Popup = () => {
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const goGithubSite = () => chrome.tabs.create(PROJECT_URL_OBJECT);
+  const handleSearch = useCallback(async (query: string) => {
+    setSearchQuery(query);
+    await memoStorage.setSearchQuery(query);
+  }, []);
 
-  const injectContentScript = async () => {
-    const [tab] = await chrome.tabs.query({ currentWindow: true, active: true });
-
-    if (tab.url!.startsWith('about:') || tab.url!.startsWith('chrome:')) {
-      chrome.notifications.create('inject-error', notificationOptions);
-    }
-
-    await chrome.scripting
-      .executeScript({
-        target: { tabId: tab.id! },
-        files: ['/content-runtime/example.iife.js', '/content-runtime/all.iife.js'],
-      })
-      .catch(err => {
-        // Handling errors related to other paths
-        if (err.message.includes('Cannot access a chrome:// URL')) {
-          chrome.notifications.create('inject-error', notificationOptions);
-        }
-      });
-  };
+  useEffect(() => {
+    const loadSearchQuery = async () => {
+      const state = await memoStorage.get();
+      setSearchQuery(state.searchQuery);
+    };
+    void loadSearchQuery();
+  }, []);
 
   return (
-    <div className={cn('App', isLight ? 'bg-slate-50' : 'bg-gray-800')}>
-      <header className={cn('App-header', isLight ? 'text-gray-900' : 'text-gray-100')}>
-        <button onClick={goGithubSite}>
-          <img src={chrome.runtime.getURL(logo)} className="App-logo" alt="logo" />
-        </button>
-        <p>
-          Edit <code>pages/popup/src/Popup.tsx</code>
-        </p>
-        <button
-          className={cn(
-            'mt-4 rounded px-4 py-1 font-bold shadow hover:scale-105',
-            isLight ? 'bg-blue-200 text-black' : 'bg-gray-700 text-white',
-          )}
-          onClick={injectContentScript}>
-          {t('injectButton')}
-        </button>
-        <ToggleButton>{t('toggleTheme')}</ToggleButton>
-      </header>
+    <div className="flex h-[600px] w-[750px] flex-col overflow-hidden bg-gray-50 p-4 dark:bg-gray-900">
+      <div className="mb-4">
+        <h1 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">Memo</h1>
+        <SearchBar onSearch={handleSearch} initialQuery={searchQuery} />
+      </div>
+
+      <div className="flex flex-1 flex-col gap-4 overflow-hidden">
+        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <MemoForm />
+        </div>
+
+        <div className="flex-1 overflow-y-auto rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <MemoList searchQuery={searchQuery} />
+        </div>
+      </div>
     </div>
   );
 };
